@@ -1,0 +1,21 @@
+{
+  "name": "obsidian-hamsterbase",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:hamsterbase/obsidian-hamsterbase.git",
+  "author": "monster <monster@hamsterbase.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "node script/build.js",
+    "dev": "node script/dev.js"
+  },
+  "dependencies": {
+    "@hamsterbase/sdk": "^0.1.6",
+    "@types/node": "^18.13.0",
+    "chokidar": "^3.5.3",
+    "ejs": "^3.1.8",
+    "esbuild": "^0.17.7",
+    "minimist": "^1.2.8",
+    "obsidian": "^1.1.1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-hamsterbase",
+  "name": "HamsterBase Official",
+  "version": "0.1.0",
+  "mainAppVersion": "0.15.0",
+  "description": "Official HamsterBase -> Obsidian integration",
+  "author": "HamsterBase",
+  "authorUrl": "https://hamsterbase.com",
+  "isDesktopOnly": true
+}
