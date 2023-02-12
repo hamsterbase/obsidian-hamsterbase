@@ -24,11 +24,10 @@ async function build() {
     external: ['obsidian', 'fs', 'path'],
     format: 'cjs',
   });
-  await fs.cp(
-    path.join(ProjectRoot, 'manifest.json'),
-    path.join(distRoot, 'manifest.json')
+  await fs.writeFile(
+    path.join(distRoot, 'manifest.json'),
+    JSON.stringify(getManifest(), null, 2)
   );
-
   if (args.obsidian) {
     const pluginRoot = path.resolve(
       args.obsidian,
