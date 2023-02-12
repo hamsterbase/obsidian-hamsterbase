@@ -31,7 +31,7 @@ async function build() {
   if (args.obsidian) {
     const pluginRoot = path.resolve(
       args.obsidian,
-      '.obsidian/plugins/hamsterbase-plugin'
+      '.obsidian/plugins/' + getManifest().id
     );
 
     console.log('Copy Dist to :', pluginRoot);
