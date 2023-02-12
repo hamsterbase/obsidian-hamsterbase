@@ -13,8 +13,6 @@ export class ObsidianHamsterBasePlugin
   implements IObsidianHamsterBasePlugin
 {
   settings: IObsidianHamsterBaseSettings = {
-    endpoint: 'http://192.168.50.11:3001',
-    token: 'EHX7FG8-KWP4X3J-PVEMGYW-P1KCC9Z',
     folder: 'hamsterbase/highlights',
   };
 
