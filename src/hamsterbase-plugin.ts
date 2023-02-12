@@ -57,7 +57,6 @@ export class ObsidianHamsterBasePlugin
 
   async syncHighlights() {
     const webpages = await this.highlightsSyncService.getWebpages();
-    // const fileSystem = new FileSystemAdapter();
     await this.app.vault.adapter.mkdir(this.settings.folder);
 
     for (const webpage of webpages) {
