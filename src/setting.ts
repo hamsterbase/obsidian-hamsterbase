@@ -1,5 +1,5 @@
 import { IObsidianHamsterBasePlugin } from './plugin';
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import { App, PluginSettingTab, Setting, Notice } from 'obsidian';
 
 export class ObsidianHamsterSettingsTab extends PluginSettingTab {
   plugin: IObsidianHamsterBasePlugin;

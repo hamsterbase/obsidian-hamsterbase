@@ -1,7 +1,7 @@
 import { Webpage } from '@hamsterbase/sdk';
 import { HighlightsSyncService } from './highlightsService';
 import { ObsidianHamsterSettingsTab } from './setting';
-import { Plugin } from 'obsidian';
+import { Plugin, Notice } from 'obsidian';
 import {
   IObsidianHamsterBasePlugin,
   IObsidianHamsterBaseSettings,
@@ -54,9 +54,13 @@ export class ObsidianHamsterBasePlugin
   }
 
   async syncHighlights() {
-    const webpages = await this.highlightsSyncService.getWebpages();
+    let webpages: Webpage[] = [];
+    try {
+      webpages = await this.highlightsSyncService.getWebpages();
+    } catch (error) {
+      new Notice((error as Error).message, 3000);
+    }
     await this.app.vault.adapter.mkdir(this.settings.folder);
-
     for (const webpage of webpages) {
       const pageName =
         this.settings.folder +
@@ -74,8 +78,6 @@ export class ObsidianHamsterBasePlugin
       await this.app.vault.adapter.write(pageName, content);
     }
   }
-
-  private;
 }
 
 export default ObsidianHamsterBasePlugin;

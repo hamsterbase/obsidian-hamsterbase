@@ -9,6 +9,7 @@ const args = minimist(process.argv.slice(2));
 const ProjectRoot = path.join(__dirname, '..');
 const distRoot = path.join(ProjectRoot, 'dist');
 const SourceCodeRoot = path.join(ProjectRoot, 'src');
+const getManifest = require('./get-manifest');
 
 let nextBuild = null;
 let buildIng = false;
