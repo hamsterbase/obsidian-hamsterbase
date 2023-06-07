@@ -1,12 +1,12 @@
 import { Webpage } from '@hamsterbase/sdk';
+import ejs from 'ejs';
+import { Notice, Plugin, TFile } from 'obsidian';
 import { HighlightsSyncService } from './highlightsService';
-import { ObsidianHamsterSettingsTab } from './setting';
-import { Plugin, Notice } from 'obsidian';
 import {
   IObsidianHamsterBasePlugin,
   IObsidianHamsterBaseSettings,
 } from './plugin';
-import ejs from 'ejs';
+import { ObsidianHamsterSettingsTab } from './setting';
 
 export class ObsidianHamsterBasePlugin
   extends Plugin
@@ -21,6 +21,13 @@ export class ObsidianHamsterBasePlugin
   async onload(): Promise<void> {
     await this.loadSettings();
     this.addSettingTab(new ObsidianHamsterSettingsTab(this.app, this));
+    this.addCommand({
+      id: 'sync',
+      name: 'Sync highlights to ' + this.settings.folder,
+      callback: () => {
+        this.syncHighlights();
+      },
+    });
     this.initPlugin();
   }
 
@@ -29,13 +36,6 @@ export class ObsidianHamsterBasePlugin
       this.settings.endpoint ?? null,
       this.settings.token ?? null
     );
-    this.addCommand({
-      id: 'hamsterbase-sync-highlights',
-      name: 'Sync highlights to ' + this.settings.folder,
-      callback: () => {
-        this.syncHighlights();
-      },
-    });
   }
 
   async loadSettings(): Promise<void> {
@@ -60,7 +60,7 @@ export class ObsidianHamsterBasePlugin
     } catch (error) {
       new Notice((error as Error).message, 3000);
     }
-    await this.app.vault.adapter.mkdir(this.settings.folder);
+    await this.app.vault.createFolder(this.settings.folder);
     for (const webpage of webpages) {
       const pageName =
         this.settings.folder +
@@ -69,13 +69,17 @@ export class ObsidianHamsterBasePlugin
         '.md';
       const content = render(webpage).markdown;
 
-      try {
-        const originalContent = await this.app.vault.adapter.read(pageName);
+      const file = this.app.vault.getAbstractFileByPath(pageName);
+      if (file instanceof TFile) {
+        const originalContent = await this.app.vault.read(file);
         if (originalContent === content) {
           continue;
+        } else {
+          await this.app.vault.modify(file, content);
         }
-      } catch (error) {}
-      await this.app.vault.adapter.write(pageName, content);
+      } else if (file === null) {
+        await this.app.vault.create(pageName, content);
+      }
     }
   }
 }
