@@ -60,13 +60,23 @@ export class ObsidianHamsterBasePlugin
     } catch (error) {
       new Notice((error as Error).message, 3000);
     }
-    await this.app.vault.createFolder(this.settings.folder);
+
+    const folder = this.app.vault.getAbstractFileByPath(this.settings.folder);
+    if (folder === null) {
+      await this.app.vault.createFolder(this.settings.folder);
+    }
+
     for (const webpage of webpages) {
       const pageName =
         this.settings.folder +
         '/' +
-        webpage.title.replace(/\//g, '\\').replace(/|/g, '') +
+        webpage.title
+          .replace(/\//g, '')
+          .replace(/|/g, '')
+          .replace(/\\/, '')
+          .replace(/\:/, '') +
         '.md';
+
       const content = render(webpage).markdown;
 
       const file = this.app.vault.getAbstractFileByPath(pageName);
