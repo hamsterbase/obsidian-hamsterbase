@@ -4,15 +4,19 @@ This is a plugin released by hamsterbase that makes it easy to export all highli
 
 ## How to install
 
-1. Open the GitHub [Release](https://github.com/hamsterbase/obsidian-hamsterbase/releases/latest) interface
-
-2. Download the main.js, manifest.json files
-
-3. Copy the two files to the `obsidian-data/.obsidian/plugins/hamsterbase` folder
+1. Open Settings > Third-party plugin
+2. Make sure Safe mode is off
+3. Click Browse community plugins
+4. Search for "Hamsterbase"
+5. Click Install
+6. Once installed, close the community plugins window and activate the newly installed plugin
 
 ## Settings
 
-1. HamsterBase Endpoint: Endpoint of HamsterBase
+1. HamsterBase Entrypoint: Entrypoint of HamsterBase API Server
+
+   format is like `http://192.168.80.10:7858`
+
 2. HamsterBase: HamsterBase API Token
 3. Folder: Folder to save HamsterBase highlights
 
