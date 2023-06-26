@@ -14,8 +14,8 @@ export class ObsidianHamsterSettingsTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName('HamsterBase Endpoint')
-      .setDesc('Endpoint of HamsterBase')
+      .setName('HamsterBase Entrypoint')
+      .setDesc('Entrypoint of HamsterBase API Server')
       .addText((text) => {
         if (this.plugin.settings.endpoint) {
           text.setValue(this.plugin.settings.endpoint);
