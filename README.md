@@ -1,5 +1,7 @@
 # obsidian-hamsterbase
 
+[Submit an Issue](https://github.com/hamsterbase/hamsterbase/issues) | [中文反馈](https://support.qq.com/product/594778)
+
 This is a plugin released by hamsterbase that makes it easy to export all highlights to obsidian.
 
 ## How to install
