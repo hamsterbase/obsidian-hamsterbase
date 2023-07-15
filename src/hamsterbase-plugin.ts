@@ -76,9 +76,10 @@ export class ObsidianHamsterBasePlugin
           .replace(/\>/g, '')
           .replace(/\*/g, '')
           .replace(/\//g, '')
-          .replace(/|/g, '')
-          .replace(/\\/, '')
-          .replace(/\:/, '') +
+          .replace(/\|/g, '')
+          .replace(/\｜/g, '')
+          .replace(/\\/g, '')
+          .replace(/\:/g, '') +
         '.md';
 
       const content = render(webpage).markdown;
