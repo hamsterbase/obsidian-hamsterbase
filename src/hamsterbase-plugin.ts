@@ -71,6 +71,10 @@ export class ObsidianHamsterBasePlugin
         this.settings.folder +
         '/' +
         webpage.title
+          .replace(/\"/g, '')
+          .replace(/\</g, '')
+          .replace(/\>/g, '')
+          .replace(/\*/g, '')
           .replace(/\//g, '')
           .replace(/|/g, '')
           .replace(/\\/, '')
