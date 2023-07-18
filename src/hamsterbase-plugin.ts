@@ -61,40 +61,51 @@ export class ObsidianHamsterBasePlugin
       new Notice((error as Error).message, 3000);
     }
 
-    const folder = this.app.vault.getAbstractFileByPath(this.settings.folder);
+    const folderName = this.settings.folder.trim();
+    const folder = this.app.vault.getAbstractFileByPath(folderName);
     if (folder === null) {
-      await this.app.vault.createFolder(this.settings.folder);
-    }
-
-    for (const webpage of webpages) {
-      const pageName =
-        this.settings.folder +
-        '/' +
-        webpage.title
-          .replace(/\"/g, '')
-          .replace(/\</g, '')
-          .replace(/\>/g, '')
-          .replace(/\*/g, '')
-          .replace(/\//g, '')
-          .replace(/\|/g, '')
-          .replace(/\｜/g, '')
-          .replace(/\\/g, '')
-          .replace(/\:/g, '') +
-        '.md';
-
-      const content = render(webpage).markdown;
-
-      const file = this.app.vault.getAbstractFileByPath(pageName);
-      if (file instanceof TFile) {
-        const originalContent = await this.app.vault.read(file);
-        if (originalContent === content) {
-          continue;
-        } else {
-          await this.app.vault.modify(file, content);
-        }
-      } else if (file === null) {
-        await this.app.vault.create(pageName, content);
+      try {
+        await this.app.vault.createFolder(folderName);
+      } catch (error) {
+        console.log('failed to create folder', folderName, error.message);
       }
+    }
+    for (const webpage of webpages) {
+      try {
+        await this.doSync(folderName, webpage);
+      } catch (error) {
+        console.log('failed to sync', error.message);
+      }
+    }
+  }
+
+  private async doSync(folderName: string, webpage: Webpage) {
+    const pageName =
+      folderName +
+      '/' +
+      webpage.title
+        .replace(/\"/g, '')
+        .replace(/\</g, '')
+        .replace(/\>/g, '')
+        .replace(/\*/g, '')
+        .replace(/\//g, '')
+        .replace(/\|/g, '')
+        .replace(/\｜/g, '')
+        .replace(/\\/g, '')
+        .replace(/\:/g, '') +
+      '.md';
+
+    const content = render(webpage).markdown;
+    const file = this.app.vault.getAbstractFileByPath(pageName);
+    if (file instanceof TFile) {
+      const originalContent = await this.app.vault.read(file);
+      if (originalContent === content) {
+        return;
+      } else {
+        await this.app.vault.modify(file, content);
+      }
+    } else if (file === null) {
+      await this.app.vault.create(pageName, content);
     }
   }
 }
